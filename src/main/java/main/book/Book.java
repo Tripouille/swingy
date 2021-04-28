@@ -1,4 +1,4 @@
-package tripouille.book;
+package main.book;
 
 import org.hibernate.validator.*;
 import jakarta.validation.constraints.NotNull;
