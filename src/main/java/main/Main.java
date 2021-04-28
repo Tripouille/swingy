@@ -36,11 +36,14 @@ public class Main extends JFrame {
         try (FileInputStream fis = new FileInputStream("conf.properties")) {
             props.load(fis);
         }
-        //Driver d = new org.postgresql.Driver();
-        //Connection conn = DriverManager.getConnection(props.getProperty("url"), props);
-        //Class.forName(props.getProperty("jdbc.driver.class"));
-        Driver d = new Driver();
-        Class.forName(props.getProperty("jdbc.driver.class"));
+        Connection conn = DriverManager.getConnection(props.getProperty("url"), props);
+        //try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/swingy", "postgres", "424242")) {
+
+        //}
+
+
+        //String url = "jdbc:postgresql://localhost/swingy?user=postgres&password=&ssl=false";
+        //Connection conn = DriverManager.getConnection(url);
         System.out.println("coucou");
     }
 }
