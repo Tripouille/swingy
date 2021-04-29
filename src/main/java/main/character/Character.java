@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public class Character {
+	@Min(500)
 	private String name;
 
 	public Character(@Min(500) @NotBlank String name) {

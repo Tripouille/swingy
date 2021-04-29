@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
@@ -47,5 +49,16 @@ public class Main extends JFrame {
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<Character>> constraintViolations = validator.validate(c);
+        if (constraintViolations.size() > 0 ) {
+            System.out.println("Impossible de valider les donnees du bean : ");
+            for (ConstraintViolation<Character> contraintes : constraintViolations) {
+              System.out.println(contraintes.getRootBeanClass().getSimpleName()+
+                 "." + contraintes.getPropertyPath() + " " + contraintes.getMessage());
+            }
+          } else {
+            System.out.println("Les donnees du bean sont valides");
+          }
     }
 }
