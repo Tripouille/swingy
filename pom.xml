@@ -7,6 +7,7 @@
   <groupId>tripouille</groupId>
   <artifactId>swingy</artifactId>
   <version>1.0</version>
+  <packaging>jar</packaging>
 
   <name>swingy</name>
   <url>https://www.42.fr/</url>
@@ -18,7 +19,6 @@
   </properties>
 
   <dependencies>
-
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -44,7 +44,6 @@
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
 
         <plugin>
@@ -54,15 +53,30 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <classpathLayoutType>custom</classpathLayoutType>
-                <customClasspathLayout>/home/kali/42/swingy/db/postgresql-42.2.20.jar</customClasspathLayout>
+                <classpathPrefix>${project.build.directory}/dependency</classpathPrefix>
+                <!-- <classpathLayoutType>custom</classpathLayoutType>
+                <customClasspathLayout>/home/kali/42/swingy/db/postgresql-42.2.20.jar</customClasspathLayout> -->
                 <mainClass>main.Main</mainClass>
               </manifest>
             </archive>
           </configuration>
         </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.0.2</version>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
     
       </plugins>
-    </pluginManagement>
   </build>
 </project>
