@@ -1,12 +1,13 @@
 package main.character;
 
-import jakarta.validation.constraints.*;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 public class Character {
-	@Min(5)
 	private String name;
 
-	public Character(@Min(5) String name) {
+	public Character(@Min(500) @NotBlank String name) {
 		this.name = name;
 	}
 

@@ -1,18 +1,22 @@
 package main;
 
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.io.FileInputStream;
-import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Properties;
 
-import javax.swing.*;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import main.character.Character;
 import org.hibernate.validator.*;
-import character.Character;
-import java.sql.*;
-import org.postgresql.*;
-import org.postgresql.Driver;
 
 public class Main extends JFrame {
     private Main() {
@@ -38,6 +42,10 @@ public class Main extends JFrame {
         }
         Connection connection = DriverManager.getConnection(props.getProperty("url"), props);
 
-        System.out.println("coucou");
+        Character c = new Character("");
+        c.coucou();
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
     }
 }
