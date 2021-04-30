@@ -1,12 +1,17 @@
 package main.models.hero;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import main.abstracts.ACharacter;
 import main.abstracts.AHero;
 
+@Entity
+@Table(name="ahero")
 public class Voleur extends AHero {
 	public Voleur(String name) {
-		super(name, 10, 60, 23);
-		this.heroClass = "Voleur";
+		super(name, "Voleur", 10, 60, 23);
 	}
 
 	@Override

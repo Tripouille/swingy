@@ -9,7 +9,7 @@ public class AArtifactFactory {
 
 	private interface CreateAArtifact {
 		AArtifact create(long baseValue, String rarity);
-		AArtifact createRandomRarity(long baseValue);
+		AArtifact create(long baseValue);
 	}
 
 	private static class Factory {
@@ -20,7 +20,7 @@ public class AArtifactFactory {
 				public AArtifact create(long baseValue, String rarity) {
 					return (new Weapon(baseValue, rarity));
 				}
-				public AArtifact createRandomRarity(long baseValue) {
+				public AArtifact create(long baseValue) {
 					return (new Weapon(baseValue));
 				}
 			});
@@ -35,7 +35,7 @@ public class AArtifactFactory {
 
 	public static AArtifact create(String ArtifactType, long baseValue) {
 		if (factory.recipe.containsKey(ArtifactType))
-			return (factory.recipe.get(ArtifactType).createRandomRarity(baseValue));
+			return (factory.recipe.get(ArtifactType).create(baseValue));
 		return (null);
 	}
 }

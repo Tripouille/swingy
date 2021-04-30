@@ -4,7 +4,19 @@ import java.lang.module.ModuleDescriptor.Modifier;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
 public abstract class AArtifact {
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected long id;
 	protected long baseValue;
 	protected String rarity;
 	protected long totalValue;
@@ -46,5 +58,9 @@ public abstract class AArtifact {
 		return (": baseValue => [" + this.baseValue + "] Rarity => ["
 				+ this.rarity + " +" + rarityManager.getModifier(rarity)
 				+ "%] totalValue => [" + this.totalValue + "]");
+	}
+
+	public long getId() {
+		return (id);
 	}
 }

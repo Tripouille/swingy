@@ -23,7 +23,9 @@ import jakarta.validation.ValidatorFactory;
 
 import org.hibernate.validator.*;
 
+import main.abstracts.AArtifact;
 import main.abstracts.AHero;
+import main.models.artifact.AArtifactFactory;
 import main.models.hero.*;
 
 public class Main extends JFrame {
@@ -43,22 +45,25 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) throws Exception {
-		AHero me = AHeroFactory.create("Astrid", "Voleur");
+		AHero me = AHeroFactory.create("jm4", "Voleur");
 		System.out.println(me);
 
-		// EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-		// EntityManager entityManager = emf.createEntityManager();
-		// entityManager.getTransaction().begin();
-		// boolean transactionOk = false;
-		// try {
-		// 	entityManager.persist(me);
-		// 	transactionOk = true;
-		// } finally {
-		// 	if(transactionOk)
-		// 		entityManager.getTransaction().commit();
-		// 	else
-		// 		System.out.println("coucou2");
-		// }
+		AArtifact weapon = AArtifactFactory.create("Weapon", 10);
+
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+		EntityManager entityManager = emf.createEntityManager();
+		entityManager.getTransaction().begin();
+		boolean transactionOk = false;
+		try {
+			//entityManager.persist(me.weapon);
+			entityManager.persist(me);
+			transactionOk = true;
+		} finally {
+			if(transactionOk)
+				entityManager.getTransaction().commit();
+			else
+				System.out.println("coucou2");
+		}
 	}
 }
 
