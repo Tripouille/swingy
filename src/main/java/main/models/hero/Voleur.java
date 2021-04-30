@@ -6,6 +6,7 @@ import main.abstracts.AHero;
 public class Voleur extends AHero {
 	public Voleur(String name) {
 		super(name, 10, 60, 23);
+		this.heroClass = "Voleur";
 	}
 
 	@Override

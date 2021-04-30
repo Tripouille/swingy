@@ -34,77 +34,70 @@ public class Main extends JFrame {
 		this.setSize(600, 400);
 		this.setLocationRelativeTo(null);
 
-		JPanel contentPane = (JPanel)this.getContentPane();
+		JPanel contentPane = (JPanel) this.getContentPane();
 		contentPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		contentPane.add(new JButton("Push me"));
 		contentPane.add(new JButton("Click meeeeeeee"));
 		contentPane.add(new JCheckBox("Check me"));
 		contentPane.add(new JTextField("edit me"));
 	}
+
 	public static void main(String[] args) throws Exception {
-		AHero me = AHeroFactory.create("Tripouille", "Voleur");
+		AHero me = AHeroFactory.create("Astrid", "Voleur");
 		System.out.println(me);
+
+		// EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+		// EntityManager entityManager = emf.createEntityManager();
+		// entityManager.getTransaction().begin();
+		// boolean transactionOk = false;
+		// try {
+		// 	entityManager.persist(me);
+		// 	transactionOk = true;
+		// } finally {
+		// 	if(transactionOk)
+		// 		entityManager.getTransaction().commit();
+		// 	else
+		// 		System.out.println("coucou2");
+		// }
 	}
 }
 
+// UIManager.setLookAndFeel(new NimbusLookAndFeel());
+// App window = new App();
+// Properties props = new Properties();
+// try (FileInputStream fis = new FileInputStream("conf.properties")) {
+// props.load(fis);
+// }
+// Connection connection = DriverManager.getConnection(props.getProperty("url"),
+// props);
 
+// Character c = new Character("Astrid");
+// c.coucou();
+// ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+// Validator validator = factory.getValidator();
+// Set<ConstraintViolation<Character>> constraintViolations =
+// validator.validate(c);
+// if (constraintViolations.size() > 0 ) {
+// System.out.println("Impossible de valider les donnees du bean : ");
+// for (ConstraintViolation<Character> contraintes : constraintViolations) {
+// System.out.println(contraintes.getRootBeanClass().getSimpleName()+
+// "." + contraintes.getPropertyPath() + " " + contraintes.getMessage());
+// }
+// } else {
+// System.out.println("Les donnees du bean sont valides");
+// }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		//UIManager.setLookAndFeel(new NimbusLookAndFeel());
-		//App window = new App();
-	  //   Properties props = new Properties();
-	  //   try (FileInputStream fis = new FileInputStream("conf.properties")) {
-	  //       props.load(fis);
-	  //   }
-	  //   Connection connection = DriverManager.getConnection(props.getProperty("url"), props);
-		
-		
-	  //   Character c = new Character("Astrid");
-	  //   c.coucou();
-	  //   ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-	  //   Validator validator = factory.getValidator();
-	  //   Set<ConstraintViolation<Character>> constraintViolations = validator.validate(c);
-	  //   if (constraintViolations.size() > 0 ) {
-	  //     System.out.println("Impossible de valider les donnees du bean : ");
-	  //     for (ConstraintViolation<Character> contraintes : constraintViolations) {
-	  //       System.out.println(contraintes.getRootBeanClass().getSimpleName()+
-	  //       "." + contraintes.getPropertyPath() + " " + contraintes.getMessage());
-	  //     }
-	  //   } else {
-	  //     System.out.println("Les donnees du bean sont valides");
-	  //   }
-		
-	  //   EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-	  //   EntityManager entityManager = emf.createEntityManager();
-	  //   entityManager.getTransaction().begin();
-	  //   boolean transactionOk = false;
-	  //   try {
-	  //     entityManager.persist(c);
-	  //     transactionOk = true;
-	  //   } finally {
-	  //     if(transactionOk)
-	  //       entityManager.getTransaction().commit();
-	  //     else
-	  //       System.out.println("coucou2");
-	  //   }
-	  // }
-	
+// EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+// EntityManager entityManager = emf.createEntityManager();
+// entityManager.getTransaction().begin();
+// boolean transactionOk = false;
+// try {
+// entityManager.persist(c);
+// transactionOk = true;
+// } finally {
+// if(transactionOk)
+// entityManager.getTransaction().commit();
+// else
+// System.out.println("coucou2");
+// }
+// }

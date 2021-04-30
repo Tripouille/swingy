@@ -26,7 +26,7 @@ public abstract class AHeroFactory {
 
 	public static AHero create(String heroName, String heroClass) {
 		if (factory.recipe.containsKey(heroClass))
-			return (new AHero(heroName, 10, 11, 12));
+			return (factory.recipe.get(heroClass).create(heroName));
 		return (null);
 	}
 

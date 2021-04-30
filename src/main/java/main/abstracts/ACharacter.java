@@ -6,7 +6,6 @@ public abstract class ACharacter {
 	protected long hitPoints;
 
 	public ACharacter(long attack, long defense, long hitPoints) {
-
 		this.attack = attack;
 		this.defense = defense;
 		this.hitPoints = hitPoints;
