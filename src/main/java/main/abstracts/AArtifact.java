@@ -59,8 +59,4 @@ public abstract class AArtifact {
 				+ this.rarity + " +" + rarityManager.getModifier(rarity)
 				+ "%] totalValue => [" + this.totalValue + "]");
 	}
-
-	public long getId() {
-		return (id);
-	}
 }

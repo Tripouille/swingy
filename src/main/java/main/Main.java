@@ -45,7 +45,7 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) throws Exception {
-		AHero me = AHeroFactory.create("jm4", "Voleur");
+		AHero me = AHeroFactory.create("jm000", "Voleur");
 		System.out.println(me);
 
 		AArtifact weapon = AArtifactFactory.create("Weapon", 10);
@@ -55,8 +55,10 @@ public class Main extends JFrame {
 		entityManager.getTransaction().begin();
 		boolean transactionOk = false;
 		try {
-			//entityManager.persist(me.weapon);
+			entityManager.persist(me.weapon);
 			entityManager.persist(me);
+			entityManager.remove(me.weapon);
+			entityManager.remove(me);
 			transactionOk = true;
 		} finally {
 			if(transactionOk)

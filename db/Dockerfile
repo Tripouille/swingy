@@ -15,5 +15,6 @@ RUN wget -P /var/www/localhost/htdocs https://github.com/vrana/adminer/releases/
     && touch /var/run/lighttpd/php-fastcgi.socket \
     && chown -R lighttpd:lighttpd /var/run/lighttpd
 
+COPY swingy.sql /
 COPY db.sh /
 ENTRYPOINT [ "sh", "/db.sh" ]
