@@ -2,10 +2,13 @@ package main.abstracts;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,10 +22,12 @@ public abstract class AHero extends ACharacter {
 	protected String name;
 	@NotBlank
 	protected String heroClass;
-	public int level = 1;
+	protected int level = 1;
 	protected long experience;
 	@OneToOne
-	public AArtifact weapon = AArtifactFactory.create("Weapon", 10);
+	protected AArtifact weapon = AArtifactFactory.create("Weapon", 10);
+	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+	private final static EntityManager em = emf.createEntityManager();
 
 	public AHero(String name, String heroClass ,long attack, long defense, long hitPoints) {
 		super(attack, defense, hitPoints);
@@ -34,5 +39,26 @@ public abstract class AHero extends ACharacter {
 	public String toString() {
 		return (this.name + super.toString() + System.lineSeparator()
 				+ weapon);
+	}
+
+	public void save() {
+		weapon.save();
+		em.getTransaction().begin();
+		em.persist(this);
+		em.getTransaction().commit();
+	}
+
+	static public AHero find(String name) {
+		em.getTransaction().begin();
+		AHero result = em.find(AHero.class, name);
+		em.getTransaction().commit();
+		if (result != null)
+			result.weapon = AArtifact.find(result.weapon.id);
+		return (result);
+	}
+
+	public void equipWeapon(AArtifact newWeapon) {
+		this.weapon.copy(newWeapon);
+		this.weapon.save();
 	}
 }

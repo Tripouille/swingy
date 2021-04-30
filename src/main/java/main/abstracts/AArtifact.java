@@ -14,7 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.Table;
+import javax.persistence.TransactionRequiredException;
+
+import org.hibernate.PersistentObjectException;
 
 @Entity
 public abstract class AArtifact {
@@ -77,8 +81,10 @@ public abstract class AArtifact {
 		em.getTransaction().commit();
 	}
 
-	public AArtifact find(long id) {
+	static public AArtifact find(long id) {
 		em.getTransaction().begin();
-		return (em.find(AArtifact.class, id));
+		AArtifact result = em.find(AArtifact.class, id);
+		em.getTransaction().commit();
+		return (result);
 	}
 }

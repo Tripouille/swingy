@@ -2,6 +2,7 @@ package main;
 
 import java.awt.FlowLayout;
 import java.io.FileInputStream;
+import java.lang.System.Logger.Level;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -45,17 +46,29 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) throws Exception {
+		String name = "Tripouille";
+		AHero me = AHero.find(name);
+		 if (me == null) {
+		 	System.out.println("is null");
+		 	me = AHeroFactory.create(name, "Voleur");
+		 	me.save();
+		}
+		System.out.println(me);
+		//me.save();
+		//AArtifact rare = AArtifactFactory.create("Weapon", 777, "Rare");
+		//me.equipWeapon(rare);
+		//me.save();
+
 		//System.out.println(me);
 		
-		//AArtifact weapon = AArtifactFactory.create("Weapon", 10);
 		
-		AArtifact weapon = AArtifactFactory.create("Weapon", 10);
-		weapon.save();
-		System.out.println(weapon);
-		AArtifact other = AArtifactFactory.create("Weapon", 10);
-		weapon.copy(other);
-		weapon.save();
-		System.out.println(weapon);
+		//AArtifact weapon = AArtifactFactory.create("Weapon", 10);
+		//weapon.save();
+		//System.out.println(weapon);
+		//AArtifact other = AArtifactFactory.create("Weapon", 10);
+		//weapon.copy(other);
+		//weapon.save();
+		//System.out.println(weapon);
 
 		//AHero me = AHeroFactory.create("astrid", "Voleur");
 		//entityManager.persist(me.weapon);
