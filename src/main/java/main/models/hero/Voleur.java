@@ -11,11 +11,11 @@ import main.abstracts.AHero;
 @Table(name="ahero")
 public class Voleur extends AHero {
 	public Voleur(String name) {
-		super(name, "Voleur", 10, 60, 23);
+		super(name, 10, 60, 23);
 	}
 
 	public Voleur() {
-		super("Tripouille", "Voleur", 10, 60, 23);
+		super("Tripouille", 10, 60, 23);
 	}
 
 	@Override

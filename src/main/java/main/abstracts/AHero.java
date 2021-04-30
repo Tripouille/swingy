@@ -21,7 +21,6 @@ public abstract class AHero extends ACharacter {
 	@Id @Min(3) @Max(20) 
 	protected String name;
 	@NotBlank
-	protected String heroClass;
 	protected int level = 1;
 	protected long experience;
 	@OneToOne
@@ -29,10 +28,9 @@ public abstract class AHero extends ACharacter {
 	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 	private final static EntityManager em = emf.createEntityManager();
 
-	public AHero(String name, String heroClass ,long attack, long defense, long hitPoints) {
+	public AHero(String name, long attack, long defense, long hitPoints) {
 		super(attack, defense, hitPoints);
 		this.name = name;
-		this.heroClass = heroClass;
 	}
 
 	@Override
