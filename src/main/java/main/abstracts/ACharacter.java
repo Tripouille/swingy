@@ -18,12 +18,12 @@ public abstract class ACharacter {
 	}
 
 	public void takeDamage(long damage) {
-		damage =  defense < damage ? damage - defense : 0;
+		damage = defense < damage ? damage - defense : 0;
 		damage = damage < this.hitPoints ? damage : this.hitPoints;
 		this.hitPoints -= damage;
 	}
 
-	public void doDamage(ACharacter target) {
+	public void attack(ACharacter target) {
 		target.takeDamage(this.attack);
 	}
 

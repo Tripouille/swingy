@@ -36,7 +36,7 @@ public class Main extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(600, 400);
 		this.setLocationRelativeTo(null);
-
+		
 		JPanel contentPane = (JPanel) this.getContentPane();
 		contentPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		contentPane.add(new JButton("Push me"));
@@ -48,16 +48,20 @@ public class Main extends JFrame {
 	public static void main(String[] args) throws Exception {
 		String name = "Tripouille";
 		AHero me = AHero.find(name);
-		 if (me == null) {
+		if (me == null) {
 		 	System.out.println("is null");
 		 	me = AHeroFactory.create(name, "Voleur");
 		 	me.save();
 		}
-		System.out.println(me);
+		AHero enemy = AHeroFactory.create("enemy", "Voleur");
+		System.out.println(enemy);
+		me.attack(enemy);
+		System.out.println(enemy);
+
 		//me.save();
 		//AArtifact rare = AArtifactFactory.create("Weapon", 777, "Rare");
 		//me.equipWeapon(rare);
-		//me.save();
+		//25me.save();
 
 		//System.out.println(me);
 		
@@ -70,7 +74,6 @@ public class Main extends JFrame {
 		//weapon.save();
 		//System.out.println(weapon);
 
-		//AHero me = AHeroFactory.create("astrid", "Voleur");
 		//entityManager.persist(me.weapon);
 		//entityManager.persist(me);
 		//entityManager.getTransaction().commit();

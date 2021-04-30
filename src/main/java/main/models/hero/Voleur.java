@@ -11,15 +11,16 @@ import main.abstracts.AHero;
 @Table(name="ahero")
 public class Voleur extends AHero {
 	public Voleur(String name) {
-		super(name, 10, 60, 23);
+		super(name, 10, 2, 23);
 	}
 
 	public Voleur() {
-		super("Tripouille", 10, 60, 23);
+		super("Tripouille", 10, 2, 23);
 	}
 
 	@Override
-	public void doDamage(ACharacter target) {
+	public void attack(ACharacter target) {
+		System.out.println("Grrrr");
 		target.takeDamage(this.attack * 2);
 	}
 }
