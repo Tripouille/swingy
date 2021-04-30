@@ -7,6 +7,10 @@ class Weapon extends AArtifact {
 		super(baseValue, rarity);
 	}
 
+	public Weapon(long baseValue) {
+		super(baseValue);
+	}
+
 	@Override
 	public String toString() {
 		return ("Weapon" + super.toString());

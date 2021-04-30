@@ -7,36 +7,44 @@ import java.util.Set;
 public abstract class AArtifact {
 	protected long baseValue;
 	protected String rarity;
-	private final static RarityModifier rarityModifier = new RarityModifier();
+	protected long totalValue;
+	private final static RarityManager rarityManager = new RarityManager();
 	
-	private static class RarityModifier {
-		private HashMap<String, Double> modifier = new HashMap<String, Double>(4);
+	private static class RarityManager {
+		private HashMap<String, Integer> modifier = new HashMap<String, Integer>(4);
 		
-		RarityModifier() {
-			modifier.put("Normal", 1.0);
-			modifier.put("Rare", 1.5);
-			modifier.put("Epique", 2.25);
-			modifier.put("Legendaire", 3.37);
+		RarityManager() {
+			modifier.put("Normal", 0);
+			modifier.put("Rare", 50);
+			modifier.put("Epique", 225);
+			modifier.put("Legendaire", 350);
 		}
 
-		public Double getModifier(String rarity) {
+		Integer getModifier(String rarity) {
 			return (modifier.get(rarity));
 		}
 
-		public Set<String> getRaritySet() {
-			return (modifier.keySet());
+		String getRandomRarity() {
+			return (String)(modifier.keySet().toArray()[(int)(Math.random() * 100) % modifier.size()]);
 		}
 	}
 
 	public AArtifact(long baseValue, String rarity) {
 		this.baseValue = baseValue;
 		this.rarity = rarity;
-		System.out.println(rarityModifier.getRaritySet().toArray().length);
+		this.totalValue = baseValue + (baseValue * rarityManager.getModifier(rarity) / 100);
+	}
+
+	public AArtifact(long baseValue) {
+		this.baseValue = baseValue;
+		this.rarity = rarityManager.getRandomRarity();
+		this.totalValue = baseValue + (baseValue * rarityManager.getModifier(rarity) / 100);
 	}
 
 	@Override
 	public String toString() {
 		return (": baseValue => [" + this.baseValue + "] Rarity => ["
-				+ this.rarity + "] totalValue => [" + this.baseValue * rarityModifier.getModifier(rarity) + "]");
+				+ this.rarity + " +" + rarityManager.getModifier(rarity)
+				+ "%] totalValue => [" + this.totalValue + "]");
 	}
 }

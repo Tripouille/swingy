@@ -15,7 +15,7 @@ public abstract class AHero extends ACharacter {
 	protected int level = 1;
 	protected long experience;
 	protected String heroClass;
-	protected AArtifact weapon = AArtifactFactory.create("Weapon", 10, "Rare");
+	protected AArtifact weapon = AArtifactFactory.create("Weapon", 10);
 
 	public AHero(String name, long attack, long defense, long hitPoints) {
 		super(attack, defense, hitPoints);
