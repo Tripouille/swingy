@@ -6,11 +6,14 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +24,8 @@ public abstract class AArtifact {
 	protected String rarity;
 	protected long totalValue;
 	private final static RarityManager rarityManager = new RarityManager();
+	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+	private final static EntityManager em = emf.createEntityManager();
 	
 	private static class RarityManager {
 		private HashMap<String, Integer> modifier = new HashMap<String, Integer>(4);
@@ -58,5 +63,22 @@ public abstract class AArtifact {
 		return (": baseValue => [" + this.baseValue + "] Rarity => ["
 				+ this.rarity + " +" + rarityManager.getModifier(rarity)
 				+ "%] totalValue => [" + this.totalValue + "]");
+	}
+
+	public void copy(AArtifact src) {
+		this.baseValue = src.baseValue;
+		this.rarity = src.rarity;
+		this.totalValue = src.totalValue;
+	}
+
+	public void save() {
+		em.getTransaction().begin();
+		em.persist(this);
+		em.getTransaction().commit();
+	}
+
+	public AArtifact find(long id) {
+		em.getTransaction().begin();
+		return (em.find(AArtifact.class, id));
 	}
 }

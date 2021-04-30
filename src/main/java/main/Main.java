@@ -45,27 +45,39 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) throws Exception {
-		AHero me = AHeroFactory.create("jm000", "Voleur");
-		System.out.println(me);
-
+		//System.out.println(me);
+		
+		//AArtifact weapon = AArtifactFactory.create("Weapon", 10);
+		
 		AArtifact weapon = AArtifactFactory.create("Weapon", 10);
+		weapon.save();
+		System.out.println(weapon);
+		AArtifact other = AArtifactFactory.create("Weapon", 10);
+		weapon.copy(other);
+		weapon.save();
+		System.out.println(weapon);
 
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-		EntityManager entityManager = emf.createEntityManager();
-		entityManager.getTransaction().begin();
-		boolean transactionOk = false;
-		try {
-			entityManager.persist(me.weapon);
-			entityManager.persist(me);
-			entityManager.remove(me.weapon);
-			entityManager.remove(me);
-			transactionOk = true;
-		} finally {
-			if(transactionOk)
-				entityManager.getTransaction().commit();
-			else
-				System.out.println("coucou2");
-		}
+		//AHero me = AHeroFactory.create("astrid", "Voleur");
+		//entityManager.persist(me.weapon);
+		//entityManager.persist(me);
+		//entityManager.getTransaction().commit();
+		//AHero me = entityManager.find(AHero.class, "astrid");
+		//System.out.println(me);
+		
+		//entityManager.getTransaction().commit();
+
+		//try {
+			//entityManager.persist(me.weapon);
+			//me.level = 70;
+			//entityManager.remove(me.weapon);
+			//entityManager.remove(me);
+			//System.out.println(me);
+			//transactionOk = true;
+		//} finally {
+			//if(transactionOk)
+			//else
+				//System.out.println("coucou2");
+		//}
 	}
 }
 

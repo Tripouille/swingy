@@ -13,13 +13,13 @@ import jakarta.validation.constraints.NotBlank;
 import main.models.artifact.AArtifactFactory;
 import main.abstracts.AArtifact;
 
-@MappedSuperclass
+@Entity
 public abstract class AHero extends ACharacter {
 	@Id @Min(3) @Max(20) 
 	protected String name;
 	@NotBlank
 	protected String heroClass;
-	protected int level = 1;
+	public int level = 1;
 	protected long experience;
 	@OneToOne
 	public AArtifact weapon = AArtifactFactory.create("Weapon", 10);
@@ -33,6 +33,6 @@ public abstract class AHero extends ACharacter {
 	@Override
 	public String toString() {
 		return (this.name + super.toString() + System.lineSeparator()
-				);
+				+ weapon);
 	}
 }

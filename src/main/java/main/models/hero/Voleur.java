@@ -14,6 +14,10 @@ public class Voleur extends AHero {
 		super(name, "Voleur", 10, 60, 23);
 	}
 
+	public Voleur() {
+		super("Tripouille", "Voleur", 10, 60, 23);
+	}
+
 	@Override
 	public void doDamage(ACharacter target) {
 		target.takeDamage(this.attack * 2);
