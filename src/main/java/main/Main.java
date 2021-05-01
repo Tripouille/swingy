@@ -1,58 +1,45 @@
 package main;
 
-import java.awt.FlowLayout;
-import java.io.FileInputStream;
-import java.lang.System.Logger.Level;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.Properties;
-import java.util.Set;
+import main.models.artifact.game.Game;
+import net.bytebuddy.build.Plugin.Factory.UsingReflection.ArgumentResolver;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
-
-import org.apache.log4j.BasicConfigurator;
-import org.hibernate.validator.*;
-
-import main.abstracts.AArtifact;
-import main.abstracts.AHero;
-import main.controllers.AHeroController;
-import main.models.artifact.AArtifactFactory;
-import main.models.hero.*;
-import main.views.AHeroView;
-
-public class Main extends JFrame {
+public class Main {
 	private Main() {
-		super("My first application");
-		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setSize(600, 400);
-		this.setLocationRelativeTo(null);
+		// super("My first application");
+		// this.setVisible(true);
+		// this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		// this.setSize(600, 400);
+		// this.setLocationRelativeTo(null);
 		
-		JPanel contentPane = (JPanel) this.getContentPane();
-		contentPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		contentPane.add(new JButton("Push me"));
-		contentPane.add(new JButton("Click meeeeeeee"));
-		contentPane.add(new JCheckBox("Check me"));
-		contentPane.add(new JTextField("edit me"));
+		// JPanel contentPane = (JPanel) this.getContentPane();
+		// contentPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// contentPane.add(new JButton("Push me"));
+		// contentPane.add(new JButton("Click meeeeeeee"));
+		// contentPane.add(new JCheckBox("Check me"));
+		// contentPane.add(new JTextField("edit me"));
+	}
+
+	private static void checkArgs(String[] args) {
+		if (args.length != 1) {
+			System.err.println("Usage: swingy.jar {mode}");
+			System.exit(1);
+		} else if (args[0].toUpperCase().equals("CONSOLE") && args[0].toUpperCase().equals("GUI")) {
+			System.err.println("Invalid mode, must be console or gui.");
+			System.exit(1);
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
-		BasicConfigurator.configure();
-		AHeroController heroController = new AHeroController(AHero.find("Tripouille"));
-		heroController.render("GUI");
-		heroController.equipWeapon(AArtifactFactory.create("Weapon", 777, "Legendaire"));
+		checkArgs(args);
+		Game game = new Game(args[0].toUpperCase());
+		
+		game.chooseHero();
+
+
+		// BasicConfigurator.configure();
+		// AHeroController heroController = new AHeroController(AHero.find("Tripouille"));
+		// heroController.render("GUI");
+		// heroController.equipWeapon(AArtifactFactory.create("Weapon", 777, "Legendaire"));
 
 
 		// if (me == null) {
