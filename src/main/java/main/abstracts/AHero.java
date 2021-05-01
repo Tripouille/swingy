@@ -14,17 +14,19 @@ import javax.persistence.Persistence;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
 import main.models.artifact.AArtifactFactory;
 import main.abstracts.AArtifact;
 
 @Entity
 public abstract class AHero extends ACharacter {
-	@Id @Min(3) @Max(20) 
+	@Getter @Id @Min(3) @Max(20) 
 	protected String name;
-	@NotBlank
+	@Getter @NotBlank 
 	protected int level = 1;
+	@Getter
 	protected long experience;
-	@OneToOne
+	@Getter @OneToOne 
 	protected AArtifact weapon = AArtifactFactory.create("Weapon", 10);
 	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 	private final static EntityManager em = emf.createEntityManager();
@@ -56,7 +58,7 @@ public abstract class AHero extends ACharacter {
 		return (result);
 	}
 
-	public void equipWeapon(AArtifact newWeapon) {
+	public void updateWeapon(AArtifact newWeapon) {
 		this.weapon.copy(newWeapon);
 		this.weapon.save();
 	}

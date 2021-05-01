@@ -27,8 +27,10 @@ import org.hibernate.validator.*;
 
 import main.abstracts.AArtifact;
 import main.abstracts.AHero;
+import main.controllers.AHeroController;
 import main.models.artifact.AArtifactFactory;
 import main.models.hero.*;
+import main.views.AHeroView;
 
 public class Main extends JFrame {
 	private Main() {
@@ -48,18 +50,18 @@ public class Main extends JFrame {
 
 	public static void main(String[] args) throws Exception {
 		BasicConfigurator.configure();
-		//SwLog.log.setLevel(Level.OFF);
-		String name = "Tripouille";
-		AHero me = AHero.find(name);
-		if (me == null) {
-		 	System.out.println("is null");
-		 	me = AHeroFactory.create(name, "Voleur");
-		 	me.save();
-		}
-		AHero enemy = AHeroFactory.create("enemy", "Voleur");
-		System.out.println(enemy);
-		me.attack(enemy);
-		System.out.println(enemy);
+		AHeroController heroController = new AHeroController(AHero.find("Tripouille"));
+		heroController.render("GUI");
+		heroController.equipWeapon(AArtifactFactory.create("Weapon", 777, "Legendaire"));
+
+
+		// if (me == null) {
+		//  	System.out.println("is null");
+		//  	me = AHeroFactory.create(name, "Voleur");
+		//  	me.save();
+		// }
+		// AHero enemy = AHeroFactory.create("enemy", "Voleur");
+		// System.out.println(enemy.getWeapon());
 
 		//me.save();
 		//AArtifact rare = AArtifactFactory.create("Weapon", 777, "Rare");
