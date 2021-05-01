@@ -22,6 +22,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
+import org.apache.log4j.BasicConfigurator;
 import org.hibernate.validator.*;
 
 import main.abstracts.AArtifact;
@@ -46,6 +47,8 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) throws Exception {
+		BasicConfigurator.configure();
+		//SwLog.log.setLevel(Level.OFF);
 		String name = "Tripouille";
 		AHero me = AHero.find(name);
 		if (me == null) {
