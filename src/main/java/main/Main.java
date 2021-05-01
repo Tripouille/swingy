@@ -1,6 +1,9 @@
 package main;
 
-import main.models.artifact.game.Game;
+import main.abstracts.AHero;
+import main.controllers.AHeroController;
+import main.controllers.GameController;
+import main.models.game.Game;
 import net.bytebuddy.build.Plugin.Factory.UsingReflection.ArgumentResolver;
 
 public class Main {
@@ -31,13 +34,13 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		checkArgs(args);
-		Game game = new Game(args[0].toUpperCase());
-		
-		game.chooseHero();
+		GameController gameController = new GameController(new Game(args[0].toUpperCase()));
+		gameController.selectHero();
+		//gameController.start();
+
 
 
 		// BasicConfigurator.configure();
-		// AHeroController heroController = new AHeroController(AHero.find("Tripouille"));
 		// heroController.render("GUI");
 		// heroController.equipWeapon(AArtifactFactory.create("Weapon", 777, "Legendaire"));
 

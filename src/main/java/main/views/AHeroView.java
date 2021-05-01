@@ -3,17 +3,12 @@ package main.views;
 import main.abstracts.AHero;
 
 public class AHeroView {
-	private AHero hero;
 
-	public AHeroView(AHero hero) {
-		this.hero = hero;
+	public void renderCLI(AHero model) {
+		System.out.println("CLI " + model);
 	}
 
-	public void renderCLI() {
-		System.out.println("CLI " + hero);
-	}
-
-	public void renderGUI() {
-		System.out.println("GUI " + hero);
+	public void renderGUI(AHero model) {
+		System.out.println("GUI " + model);
 	}
 }

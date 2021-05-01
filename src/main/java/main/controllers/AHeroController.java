@@ -6,22 +6,22 @@ import main.views.AHeroView;
 
 public class AHeroController {
 	private AHero model;
-	private AHeroView view;
+	private AHeroView view = new AHeroView();
 
-	public AHeroController(AHero model) {
-		this.model = model;
-		this.view = new AHeroView(model);
-	}
-
-	public void render(String mode) throws Exception {
+	public void render(String mode) {
 		if (mode == "CLI")
-			view.renderCLI();
+			view.renderCLI(model);
 		else if (mode == "GUI")
-			view.renderGUI();
+			view.renderGUI(model);
 	}
 
 	public void equipWeapon(AArtifact newWeapon) {
 		System.out.println(this.model.getName() + " equip " + newWeapon);
 		this.model.updateWeapon(newWeapon);
+	}
+
+	public void loadModel(String heroName) {
+		model = AHero.find(heroName);
+		System.out.println(model);
 	}
 }

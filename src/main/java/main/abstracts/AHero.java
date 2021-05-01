@@ -18,15 +18,15 @@ import lombok.Getter;
 import main.models.artifact.AArtifactFactory;
 import main.abstracts.AArtifact;
 
-@Entity
+@Entity @Getter
 public abstract class AHero extends ACharacter {
-	@Getter @Id @Min(3) @Max(20) 
+	@Id @Min(3) @Max(20) 
 	protected String name;
-	@Getter @NotBlank 
+	@NotBlank 
 	protected int level = 1;
-	@Getter
+
 	protected long experience;
-	@Getter @OneToOne 
+	@OneToOne 
 	protected AArtifact weapon = AArtifactFactory.create("Weapon", 10);
 	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 	private final static EntityManager em = emf.createEntityManager();

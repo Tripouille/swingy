@@ -2,6 +2,7 @@ package main.models.artifact;
 
 import java.util.HashMap;
 
+import lombok.experimental.UtilityClass;
 import main.abstracts.AArtifact;
 
 public class AArtifactFactory {
