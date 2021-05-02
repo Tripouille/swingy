@@ -11,18 +11,20 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import main.models.artifact.AArtifactFactory;
 import main.abstracts.AArtifact;
 
 @Entity @Getter
 public abstract class AHero extends ACharacter {
-	@Id @Min(3) @Max(20) 
+	@Id @Pattern(regexp = "^[a-zA-Z]{3,20}$")
 	protected String name;
-	@NotBlank 
 	protected int level = 1;
 
 	protected long experience;

@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import jakarta.validation.constraints.Min;
+import main.abstracts.AHero;
 import main.models.game.Game;
 import main.models.hero.AHeroFactory;
 import main.views.GameView;
@@ -13,6 +22,7 @@ public class GameController {
 	private Game model;
 	private GameView view = new GameView();
 	private Scanner scanner = new Scanner(System.in);
+	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 	public GameController(Game model) {
 		this.model = model;
@@ -42,23 +52,49 @@ public class GameController {
 				view.renderGuiSelection(heroes);
 		} while ((heroIndex = getValidIndexFromInput(createIndex)) == null);
 		if (heroIndex == createIndex)
-			createNewHero();
+			createHero(heroes);
 		else
 			loadHero(heroes.get(heroIndex));
 	}
 
-	private void createNewHero() {
+	private void createHero(ArrayList<String> heroesAlreadyInDB) {
 		System.out.println("Create New Hero");
-		Set<String> availableHeroes = AHeroFactory.getAllAvailableHeroes();
-		Integer heroIndex = null;
+		ArrayList<String> availableClass = AHeroFactory.getAllAvailableClass();
+		Integer classIndex = askClassIndex(availableClass);
+		String heroClass = availableClass.get(classIndex);
+		Set<ConstraintViolation<AHero>> constraintViolations;
+		String heroName = null;
+		AHero newHero = null;
 
 		do {
 			if (model.getMode().equals("CONSOLE"))
-				view.renderConsoleCreation(availableHeroes);
+				view.renderConsoleCreateHeroName(heroClass);
 			else
-				view.renderGuiCreation(availableHeroes);
-		} while ((heroIndex = getValidIndexFromInput(availableHeroes.size() - 1)) == null);
-		System.out.println(heroIndex); // <--- change Set to ArrayList pour instancier facilement
+				view.renderGuiCreateHeroName(heroClass);
+			heroName = this.scanner.nextLine();
+			newHero = AHeroFactory.create(heroName, heroClass);
+			constraintViolations = validator.validate(newHero);
+			if (constraintViolations.size() > 0)
+				for (ConstraintViolation<AHero> contraintes : constraintViolations)
+					System.out.println(contraintes.getRootBeanClass().getSimpleName() +
+						"." + contraintes.getPropertyPath() + " " + contraintes.getMessage());
+			else if (heroesAlreadyInDB.contains(heroName))
+				System.out.println("This name is already use.");
+		} while (heroesAlreadyInDB.contains(heroName) || constraintViolations.size() > 0);
+		newHero.save();
+		selectHero();
+	}
+	
+	private Integer askClassIndex(ArrayList<String> availableClass) {
+		Integer classIndex = null;
+
+		do {
+			if (model.getMode().equals("CONSOLE"))
+				view.renderConsoleCreateHeroClass(availableClass);
+			else
+				view.renderGuiCreateHeroClass(availableClass);
+		} while ((classIndex = getValidIndexFromInput(availableClass.size() - 1)) == null);
+		return (classIndex);
 	}
 
 	private void loadHero(String heroName) {

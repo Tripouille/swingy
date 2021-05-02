@@ -1,5 +1,6 @@
 package main.models.hero;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -35,8 +36,8 @@ public abstract class AHeroFactory {
 		return (null);
 	}
 
-	public static Set<String> getAllAvailableHeroes() {
-		return (factory.recipe.keySet());
+	public static ArrayList<String> getAllAvailableClass() {
+		return (new ArrayList<String>(factory.recipe.keySet()));
 	}
 
 	public static String getHeroInfos(String heroClass) {
