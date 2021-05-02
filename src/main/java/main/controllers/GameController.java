@@ -36,6 +36,12 @@ public class GameController {
 	}
 
 	public void selectHero() {
+		if (model.getMode().equals("CONSOLE"))
+			selectHeroConsole();
+		else
+			selectHeroGui();
+	}
+	private void selectHeroConsole() {
 		System.out.println("> Select Hero <");
 		ArrayList<String> heroes = model.getHeroesFromDB();
 		int createIndex = heroes.size();
@@ -43,40 +49,37 @@ public class GameController {
 		Integer heroIndex = null;
 
 		do {
-			if (model.getMode().equals("CONSOLE"))
-				view.renderConsoleSelection(heroes);
-			else
-				view.renderGuiSelection(heroes);
+			view.renderSelectionConsole(heroes);
 		} while ((heroIndex = getValidIndexFromInput(createIndex == 0 ? createIndex : deleteIndex)) == null);
+
 		if (heroIndex == createIndex)
-			createHero(heroes);
+			createHeroConsole(heroes);
 		else if (heroIndex == deleteIndex)
-			deleteHero(heroes);
+			deleteHeroConsole(heroes);
 		else
 			loadHero(heroes.get(heroIndex));
 	}
+	private void selectHeroGui() {
+	}
 
-	private void createHero(ArrayList<String> heroesAlreadyInDB) {
+	private void createHeroConsole(ArrayList<String> heroesAlreadyInDB) {
 		System.out.println("> Create New Hero <");
 		ArrayList<String> availableClass = AHeroFactory.getAllAvailableClass();
-		Integer classIndex = askClassIndex(availableClass);
+		Integer classIndex = askClassIndexConsole(availableClass);
 		String heroClass = availableClass.get(classIndex);
 		Set<ConstraintViolation<AHero>> constraintViolations;
 		String heroName = null;
 		AHero newHero = null;
 
-		do {
-			if (model.getMode().equals("CONSOLE"))
-				view.renderConsoleCreateHeroName(heroClass);
-			else
-				view.renderGuiCreateHeroName(heroClass);
+		do {	
+			view.renderCreateHeroNameConsole(heroClass);
 			heroName = this.scanner.nextLine();
 			newHero = AHeroFactory.create(heroName, heroClass);
 			constraintViolations = validator.validate(newHero);
 			if (constraintViolations.size() > 0)
 				for (ConstraintViolation<AHero> contraintes : constraintViolations)
 					System.out.println(contraintes.getRootBeanClass().getSimpleName() +
-						"." + contraintes.getPropertyPath() + " " + contraintes.getMessage());
+										"." + contraintes.getPropertyPath() + " " + contraintes.getMessage());
 			else if (heroesAlreadyInDB.contains(heroName))
 				System.out.println("This name is already use.");
 		} while (heroesAlreadyInDB.contains(heroName) || constraintViolations.size() > 0);
@@ -84,29 +87,23 @@ public class GameController {
 		selectHero();
 	}
 
-	private void deleteHero(ArrayList<String> heroesAlreadyInDB) {
+	private void deleteHeroConsole(ArrayList<String> heroesAlreadyInDB) {
 		System.out.println("> Delete Hero <");
 		Integer heroIndex = null;
 
 		do {
-			if (model.getMode().equals("CONSOLE"))
-				view.renderConsoleDeleteHero(heroesAlreadyInDB);
-			else
-				view.renderGuiDeleteHero(heroesAlreadyInDB);
+				view.renderDeleteHeroConsole(heroesAlreadyInDB);
 		} while ((heroIndex = getValidIndexFromInput(heroesAlreadyInDB.size() - 1)) == null);
 		model.importHero(heroesAlreadyInDB.get(heroIndex));
 		model.deleteHero();
 		selectHero();
 	}
 	
-	private Integer askClassIndex(ArrayList<String> availableClass) {
+	private Integer askClassIndexConsole(ArrayList<String> availableClass) {
 		Integer classIndex = null;
 
 		do {
-			if (model.getMode().equals("CONSOLE"))
-				view.renderConsoleCreateHeroClass(availableClass);
-			else
-				view.renderGuiCreateHeroClass(availableClass);
+			view.renderCreateHeroClassConsole(availableClass);
 		} while ((classIndex = getValidIndexFromInput(availableClass.size() - 1)) == null);
 		return (classIndex);
 	}
