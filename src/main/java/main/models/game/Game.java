@@ -50,6 +50,10 @@ public class Game {
 		return (heroes);
 	}
 
+	public void deleteHero() {
+		heroController.removeModel();
+	}
+
 	public void importHero(String heroName) {
 		heroController.loadModel(heroName);
 	}

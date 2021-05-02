@@ -15,10 +15,11 @@ public class GameView {
 	public void renderConsoleSelection(ArrayList<String> heroes) {
 		int i;
 		
-		for (i = 0; i < heroes.size(); ++i) {
+		for (i = 0; i < heroes.size(); ++i)
 			System.out.println(i + " - " + heroes.get(i));
-		}
 		System.out.println(i + " - Create new hero");
+		if (i > 0)
+			System.out.println(++i + " - Delete hero");
 		System.out.println("Please enter a number beetween 0 and " + i);
 	}
 	public void renderGuiSelection(ArrayList<String> heroes) {
@@ -41,6 +42,17 @@ public class GameView {
 		System.out.println("Please enter your " + heroClass + " name");
 	}
 	public void renderGuiCreateHeroName(String heroClass) {
+		
+	}
+
+	public void renderConsoleDeleteHero(ArrayList<String> heroes) {
+		int i;
+		
+		for (i = 0; i < heroes.size(); ++i)
+			System.out.println(i + " - " + heroes.get(i));
+		System.out.println("Please enter a number beetween 0 and " + (i - 1));
+	}
+	public void renderGuiDeleteHero(ArrayList<String> heroes) {
 		
 	}
 }

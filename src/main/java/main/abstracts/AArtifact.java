@@ -80,6 +80,12 @@ public abstract class AArtifact {
 		em.persist(this);
 		em.getTransaction().commit();
 	}
+	
+	public void remove() {
+		em.getTransaction().begin();
+		em.remove(this);
+		em.getTransaction().commit();
+	}
 
 	static public AArtifact find(long id) {
 		em.getTransaction().begin();

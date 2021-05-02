@@ -1,12 +1,8 @@
 package main.controllers;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
-
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -43,6 +39,7 @@ public class GameController {
 		System.out.println("> Select Hero <");
 		ArrayList<String> heroes = model.getHeroesFromDB();
 		int createIndex = heroes.size();
+		int deleteIndex = createIndex + 1;
 		Integer heroIndex = null;
 
 		do {
@@ -50,15 +47,17 @@ public class GameController {
 				view.renderConsoleSelection(heroes);
 			else
 				view.renderGuiSelection(heroes);
-		} while ((heroIndex = getValidIndexFromInput(createIndex)) == null);
+		} while ((heroIndex = getValidIndexFromInput(createIndex == 0 ? createIndex : deleteIndex)) == null);
 		if (heroIndex == createIndex)
 			createHero(heroes);
+		else if (heroIndex == deleteIndex)
+			deleteHero(heroes);
 		else
 			loadHero(heroes.get(heroIndex));
 	}
 
 	private void createHero(ArrayList<String> heroesAlreadyInDB) {
-		System.out.println("Create New Hero");
+		System.out.println("> Create New Hero <");
 		ArrayList<String> availableClass = AHeroFactory.getAllAvailableClass();
 		Integer classIndex = askClassIndex(availableClass);
 		String heroClass = availableClass.get(classIndex);
@@ -82,6 +81,21 @@ public class GameController {
 				System.out.println("This name is already use.");
 		} while (heroesAlreadyInDB.contains(heroName) || constraintViolations.size() > 0);
 		newHero.save();
+		selectHero();
+	}
+
+	private void deleteHero(ArrayList<String> heroesAlreadyInDB) {
+		System.out.println("> Delete Hero <");
+		Integer heroIndex = null;
+
+		do {
+			if (model.getMode().equals("CONSOLE"))
+				view.renderConsoleDeleteHero(heroesAlreadyInDB);
+			else
+				view.renderGuiDeleteHero(heroesAlreadyInDB);
+		} while ((heroIndex = getValidIndexFromInput(heroesAlreadyInDB.size() - 1)) == null);
+		model.importHero(heroesAlreadyInDB.get(heroIndex));
+		model.deleteHero();
 		selectHero();
 	}
 	

@@ -64,4 +64,11 @@ public abstract class AHero extends ACharacter {
 		this.weapon.copy(newWeapon);
 		this.weapon.save();
 	}
+
+	public void remove() {
+		weapon.remove();
+		em.getTransaction().begin();
+		em.remove(this);
+		em.getTransaction().commit();
+	}
 }
