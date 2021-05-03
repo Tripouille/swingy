@@ -13,7 +13,7 @@ import main.abstracts.AHero;
 
 public class GameView {
 
-	public void renderSelectionConsole(ArrayList<AHero> heroes) {
+	public void renderSelectionConsole(ArrayList<AHero> heroes, int createIndex, int deleteIndex, int quitIndex) {
 		int i;
 		
 		for (i = 0; i < heroes.size(); ++i)
@@ -21,9 +21,10 @@ public class GameView {
 		System.out.println(i + " - Create new hero");
 		if (i > 0)
 			System.out.println(++i + " - Delete hero");
+		System.out.println(++i + " - Quit");
 		System.out.println("Please enter a number beetween 0 and " + i);
 	}
-	public void renderSelectionGui(ArrayList<AHero> heroes) {
+	public void renderSelectionGui(ArrayList<AHero> heroes, int createIndex, int deleteIndex, int quitIndex) {
 		
 	}
 	

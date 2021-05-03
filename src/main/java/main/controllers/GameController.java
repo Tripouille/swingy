@@ -46,13 +46,16 @@ public class GameController {
 		ArrayList<AHero> heroes = model.getHeroesFromDB();
 		int createIndex = heroes.size();
 		int deleteIndex = createIndex + 1;
+		int quitIndex = createIndex == 0 ? createIndex + 1 : createIndex + 2;
 		Integer heroIndex = null;
 
 		do {
-			view.renderSelectionConsole(heroes);
-		} while ((heroIndex = getValidIndexFromInput(createIndex == 0 ? createIndex : deleteIndex)) == null);
+			view.renderSelectionConsole(heroes, createIndex, deleteIndex, quitIndex);
+		} while ((heroIndex = getValidIndexFromInput(quitIndex)) == null);
 
-		if (heroIndex == createIndex)
+		if (heroIndex == quitIndex)
+			System.exit(0);
+		else if (heroIndex == createIndex)
 			createHeroConsole(heroes);
 		else if (heroIndex == deleteIndex)
 			deleteHeroConsole(heroes);
