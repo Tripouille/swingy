@@ -34,14 +34,14 @@ public class Game {
 		}
 	}
 
-	public ArrayList<String> getHeroesFromDB() {
-		ArrayList<String> heroes = new ArrayList<String>();
+	public ArrayList<AHero> getHeroesFromDB() {
+		ArrayList<AHero> heroes = new ArrayList<AHero>();
 
 		try (Connection connection = DriverManager.getConnection(props.getProperty("url"), props);
 		Statement statement = connection.createStatement()) {
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM ahero");
+			ResultSet resultSet = statement.executeQuery("SELECT name FROM ahero");
 			while (resultSet.next()) {
-				heroes.add(resultSet.getString("name"));
+				heroes.add(heroController.getHero(resultSet.getString("name")));
 			}
 		} catch (SQLException e) {
 			System.err.println("Invalid conf.properties.");

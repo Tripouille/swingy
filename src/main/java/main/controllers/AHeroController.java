@@ -24,6 +24,10 @@ public class AHeroController {
 		model = AHero.find(heroName);
 	}
 
+	public AHero getHero(String heroName) {
+		return AHero.find(heroName);
+	}
+
 	public void removeModel() {
 		model.remove();
 	}

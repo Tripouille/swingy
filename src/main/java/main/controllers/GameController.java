@@ -43,7 +43,7 @@ public class GameController {
 	}
 	private void selectHeroConsole() {
 		System.out.println("> Select Hero <");
-		ArrayList<String> heroes = model.getHeroesFromDB();
+		ArrayList<AHero> heroes = model.getHeroesFromDB();
 		int createIndex = heroes.size();
 		int deleteIndex = createIndex + 1;
 		Integer heroIndex = null;
@@ -62,7 +62,7 @@ public class GameController {
 	private void selectHeroGui() {
 	}
 
-	private void createHeroConsole(ArrayList<String> heroesAlreadyInDB) {
+	private void createHeroConsole(ArrayList<AHero> heroesAlreadyInDB) {
 		System.out.println("> Create New Hero <");
 		ArrayList<String> availableClass = AHeroFactory.getAllAvailableClass();
 		Integer classIndex = askClassIndexConsole(availableClass);
@@ -70,6 +70,8 @@ public class GameController {
 		Set<ConstraintViolation<AHero>> constraintViolations;
 		String heroName = null;
 		AHero newHero = null;
+		ArrayList<String> alreadyUsedName = new ArrayList<String>();
+		for (AHero hero : heroesAlreadyInDB) alreadyUsedName.add(hero.getName());
 
 		do {	
 			view.renderCreateHeroNameConsole(heroClass);
@@ -80,21 +82,22 @@ public class GameController {
 				for (ConstraintViolation<AHero> contraintes : constraintViolations)
 					System.out.println(contraintes.getRootBeanClass().getSimpleName() +
 										"." + contraintes.getPropertyPath() + " " + contraintes.getMessage());
-			else if (heroesAlreadyInDB.contains(heroName))
+			else if (alreadyUsedName.contains(heroName))
 				System.out.println("This name is already use.");
-		} while (heroesAlreadyInDB.contains(heroName) || constraintViolations.size() > 0);
+		} while (alreadyUsedName.contains(heroName) || constraintViolations.size() > 0);
 		newHero.save();
 		selectHero();
 	}
 
-	private void deleteHeroConsole(ArrayList<String> heroesAlreadyInDB) {
+	private void deleteHeroConsole(ArrayList<AHero> heroesAlreadyInDB) {
 		System.out.println("> Delete Hero <");
 		Integer heroIndex = null;
 
 		do {
-				view.renderDeleteHeroConsole(heroesAlreadyInDB);
+			view.renderDeleteHeroConsole(heroesAlreadyInDB);
 		} while ((heroIndex = getValidIndexFromInput(heroesAlreadyInDB.size() - 1)) == null);
-		model.importHero(heroesAlreadyInDB.get(heroIndex));
+
+		model.importHero(heroesAlreadyInDB.get(heroIndex).getName());
 		model.deleteHero();
 		selectHero();
 	}
@@ -108,9 +111,8 @@ public class GameController {
 		return (classIndex);
 	}
 
-	private void loadHero(String heroName) {
-		System.out.println("Loading hero " + heroName);
-		model.importHero(heroName);
+	private void loadHero(AHero hero) {
+		model.importHero(hero.getName());
 	}
 
 	public void start() {

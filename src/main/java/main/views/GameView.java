@@ -8,11 +8,12 @@ import java.util.Set;
 import lombok.NoArgsConstructor;
 import main.models.game.Game;
 import main.models.hero.AHeroFactory;
+import main.abstracts.AHero;
 
 
 public class GameView {
 
-	public void renderSelectionConsole(ArrayList<String> heroes) {
+	public void renderSelectionConsole(ArrayList<AHero> heroes) {
 		int i;
 		
 		for (i = 0; i < heroes.size(); ++i)
@@ -22,7 +23,7 @@ public class GameView {
 			System.out.println(++i + " - Delete hero");
 		System.out.println("Please enter a number beetween 0 and " + i);
 	}
-	public void renderSelectionGui(ArrayList<String> heroes) {
+	public void renderSelectionGui(ArrayList<AHero> heroes) {
 		
 	}
 	
@@ -45,14 +46,14 @@ public class GameView {
 		
 	}
 
-	public void renderDeleteHeroConsole(ArrayList<String> heroes) {
+	public void renderDeleteHeroConsole(ArrayList<AHero> heroes) {
 		int i;
 		
 		for (i = 0; i < heroes.size(); ++i)
 			System.out.println(i + " - " + heroes.get(i));
 		System.out.println("Please enter a number beetween 0 and " + (i - 1));
 	}
-	public void renderDeleteHeroGui(ArrayList<String> heroes) {
+	public void renderDeleteHeroGui(ArrayList<AHero> heroes) {
 		
 	}
 }
