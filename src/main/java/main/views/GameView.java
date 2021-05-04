@@ -32,7 +32,7 @@ public class GameView {
 		int i = 0;
 
 		for (i = 0; i < availableClass.size(); ++i)
-			System.out.println(i + " - " + availableClass.get(i) + "\n"
+			System.out.println(i + " - " + availableClass.get(i) + System.lineSeparator()
 								+ AHeroFactory.getHeroInfos(availableClass.get(i).getName()));
 		System.out.println("Please enter a number beetween 0 and " + (i - 1));
 	}

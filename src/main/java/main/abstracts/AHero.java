@@ -26,10 +26,10 @@ public abstract class AHero extends ACharacter {
 	@Id @Pattern(regexp = "^[a-zA-Z]{3,20}$")
 	protected String name;
 	protected int level = 1;
-
 	protected long experience;
 	@OneToOne 
-	protected AArtifact weapon = AArtifactFactory.create("Weapon", 10);
+	protected AArtifact weapon = null;
+	
 	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 	private final static EntityManager em = emf.createEntityManager();
 

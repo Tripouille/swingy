@@ -9,9 +9,9 @@ public class AHeroController {
 	private AHeroView view = new AHeroView();
 
 	public void render(String mode) {
-		if (mode == "CLI")
+		if (mode.equals("CONSOLE"))
 			view.renderCLI(model);
-		else if (mode == "GUI")
+		else
 			view.renderGUI(model);
 	}
 

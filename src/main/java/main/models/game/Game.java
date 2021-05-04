@@ -57,4 +57,8 @@ public class Game {
 	public void importHero(AHero hero) {
 		heroController.loadModel(hero);
 	}
+
+	public void showHero() {
+		heroController.render(mode);
+	}
 }

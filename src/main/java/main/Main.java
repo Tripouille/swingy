@@ -36,7 +36,7 @@ public class Main {
 		checkArgs(args);
 		GameController gameController = new GameController(new Game(args[0].toUpperCase()));
 		gameController.selectHero();
-		//gameController.start();
+		gameController.start();
 
 
 

@@ -118,5 +118,6 @@ public class GameController {
 
 	public void start() {
 		System.out.println("> Game Start <");
+		model.showHero();
 	}
 }

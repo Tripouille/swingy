@@ -17,10 +17,14 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Table;
 import javax.persistence.TransactionRequiredException;
+import java.util.ArrayList;
 
 import org.hibernate.PersistentObjectException;
 
-@Entity
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Entity @Getter
 public abstract class AArtifact {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
@@ -30,23 +34,34 @@ public abstract class AArtifact {
 	private final static RarityManager rarityManager = new RarityManager();
 	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 	private final static EntityManager em = emf.createEntityManager();
-	
 	private static class RarityManager {
-		private HashMap<String, Integer> modifier = new HashMap<String, Integer>(4);
-		
+		private ArrayList<Rarity> rarity = new ArrayList<Rarity>(4);
+		@AllArgsConstructor
+		private class Rarity {
+			private String name;
+			private Integer modifier;
+			private Double dropRate;
+		}
 		RarityManager() {
-			modifier.put("Normal", 0);
-			modifier.put("Rare", 50);
-			modifier.put("Epique", 225);
-			modifier.put("Legendaire", 350);
+			rarity.add(new Rarity("Legendaire", 350, 0.05));
+			rarity.add(new Rarity("Epique", 225, 0.15));
+			rarity.add(new Rarity("Rare", 50, 0.30));
+			rarity.add(new Rarity("Normal", 0, 1.0));
 		}
 
-		Integer getModifier(String rarity) {
-			return (modifier.get(rarity));
+		Integer getModifier(String name) {
+			for (Rarity r : rarity)
+				if (name.equals(r.name))
+					return (r.modifier);
+			return (0);
 		}
 
 		String getRandomRarity() {
-			return (String)(modifier.keySet().toArray()[(int)(Math.random() * 100) % modifier.size()]);
+			Double random = Math.random();
+			for (Rarity r : rarity)
+				if (random <= r.dropRate)
+					return (r.name);
+			return ("");
 		}
 	}
 
