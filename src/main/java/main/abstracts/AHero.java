@@ -29,7 +29,6 @@ public abstract class AHero extends ACharacter {
 	protected long experience;
 	@OneToOne 
 	protected AArtifact weapon = null;
-	
 	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 	private final static EntityManager em = emf.createEntityManager();
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.UnsupportedLookAndFeelException;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -16,7 +18,7 @@ import main.views.GameView;
 
 public class GameController {
 	private Game model;
-	private GameView view = new GameView();
+	private GameView view = new GameView(this);
 	private Scanner scanner = new Scanner(System.in);
 	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
@@ -36,14 +38,14 @@ public class GameController {
 	}
 
 	public void selectHero() {
-		if (model.getMode().equals("CONSOLE"))
-			selectHeroConsole();
-		else
-			selectHeroGui();
-	}
-	private void selectHeroConsole() {
-		System.out.println("> Select Hero <");
 		ArrayList<AHero> heroes = model.getHeroesFromDB();
+		if (model.getMode().equals("CONSOLE"))
+			selectHeroConsole(heroes);
+		else
+			selectHeroGui(heroes);
+	}
+	private void selectHeroConsole(ArrayList<AHero> heroes) {
+		System.out.println("> Select Hero <");
 		int createIndex = heroes.size();
 		int deleteIndex = createIndex + 1;
 		int switchIndex = createIndex == 0 ? createIndex + 1 : createIndex + 2;
@@ -57,8 +59,8 @@ public class GameController {
 		if (index == quitIndex)
 			System.exit(0);
 		else if (index == switchIndex) {
-			model.switchMode();
-			selectHeroConsole();
+			switchMode();
+			selectHero();
 		}
 		else if (index == createIndex)
 			createHeroConsole(heroes);
@@ -67,7 +69,8 @@ public class GameController {
 		else
 			loadHero(heroes.get(index));
 	}
-	private void selectHeroGui() {
+	private void selectHeroGui(ArrayList<AHero> heroes) {
+		view.renderSelectionGui(heroes);
 	}
 
 	private void createHeroConsole(ArrayList<AHero> heroesAlreadyInDB) {
@@ -124,5 +127,9 @@ public class GameController {
 	public void start() {
 		System.out.println("> Game Start <");
 		model.showHero();
+	}
+
+	public void switchMode() {
+		model.switchMode();
 	}
 }
