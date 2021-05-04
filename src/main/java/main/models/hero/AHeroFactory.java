@@ -24,7 +24,7 @@ public abstract class AHeroFactory {
 					return (new Voleur(name));
 				}
 				public String infos() {
-					return ("has 25% chance to deal double damage.");
+					return ("Has 25% chance to deal double damage.");
 				}
 			});
 		}
@@ -36,8 +36,10 @@ public abstract class AHeroFactory {
 		return (null);
 	}
 
-	public static ArrayList<String> getAllAvailableClass() {
-		return (new ArrayList<String>(factory.recipe.keySet()));
+	public static ArrayList<AHero> getAllAvailableClass() {
+		ArrayList<AHero> availableClass = new ArrayList<AHero>();
+		for (String heroClass : factory.recipe.keySet()) availableClass.add(create(heroClass, heroClass));
+		return (availableClass);
 	}
 
 	public static String getHeroInfos(String heroClass) {

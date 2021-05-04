@@ -50,7 +50,7 @@ public class GameController {
 		Integer heroIndex = null;
 
 		do {
-			view.renderSelectionConsole(heroes, createIndex, deleteIndex, quitIndex);
+			view.renderSelectionConsole(heroes);
 		} while ((heroIndex = getValidIndexFromInput(quitIndex)) == null);
 
 		if (heroIndex == quitIndex)
@@ -67,9 +67,9 @@ public class GameController {
 
 	private void createHeroConsole(ArrayList<AHero> heroesAlreadyInDB) {
 		System.out.println("> Create New Hero <");
-		ArrayList<String> availableClass = AHeroFactory.getAllAvailableClass();
+		ArrayList<AHero> availableClass = AHeroFactory.getAllAvailableClass();
 		Integer classIndex = askClassIndexConsole(availableClass);
-		String heroClass = availableClass.get(classIndex);
+		String heroClass = availableClass.get(classIndex).getName();
 		Set<ConstraintViolation<AHero>> constraintViolations;
 		String heroName = null;
 		AHero newHero = null;
@@ -99,13 +99,11 @@ public class GameController {
 		do {
 			view.renderDeleteHeroConsole(heroesAlreadyInDB);
 		} while ((heroIndex = getValidIndexFromInput(heroesAlreadyInDB.size() - 1)) == null);
-
-		model.importHero(heroesAlreadyInDB.get(heroIndex).getName());
-		model.deleteHero();
+		heroesAlreadyInDB.get(heroIndex).remove();
 		selectHero();
 	}
 	
-	private Integer askClassIndexConsole(ArrayList<String> availableClass) {
+	private Integer askClassIndexConsole(ArrayList<AHero> availableClass) {
 		Integer classIndex = null;
 
 		do {
@@ -115,7 +113,7 @@ public class GameController {
 	}
 
 	private void loadHero(AHero hero) {
-		model.importHero(hero.getName());
+		model.importHero(hero);
 	}
 
 	public void start() {

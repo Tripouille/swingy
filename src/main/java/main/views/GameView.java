@@ -13,7 +13,7 @@ import main.abstracts.AHero;
 
 public class GameView {
 
-	public void renderSelectionConsole(ArrayList<AHero> heroes, int createIndex, int deleteIndex, int quitIndex) {
+	public void renderSelectionConsole(ArrayList<AHero> heroes) {
 		int i;
 		
 		for (i = 0; i < heroes.size(); ++i)
@@ -24,16 +24,16 @@ public class GameView {
 		System.out.println(++i + " - Quit");
 		System.out.println("Please enter a number beetween 0 and " + i);
 	}
-	public void renderSelectionGui(ArrayList<AHero> heroes, int createIndex, int deleteIndex, int quitIndex) {
+	public void renderSelectionGui(ArrayList<AHero> heroes) {
 		
 	}
 	
-	public void renderCreateHeroClassConsole(ArrayList<String> availableClass) {
+	public void renderCreateHeroClassConsole(ArrayList<AHero> availableClass) {
 		int i = 0;
 
 		for (i = 0; i < availableClass.size(); ++i)
-			System.out.println(i + " - " + availableClass.get(i) + " "
-								+ AHeroFactory.getHeroInfos(availableClass.get(i)));
+			System.out.println(i + " - " + availableClass.get(i) + "\n"
+								+ AHeroFactory.getHeroInfos(availableClass.get(i).getName()));
 		System.out.println("Please enter a number beetween 0 and " + (i - 1));
 	}
 	public void renderCreateHeroClassGui(ArrayList<String> availableClass) {

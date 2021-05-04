@@ -41,7 +41,7 @@ public class Game {
 		Statement statement = connection.createStatement()) {
 			ResultSet resultSet = statement.executeQuery("SELECT name FROM ahero");
 			while (resultSet.next()) {
-				heroes.add(heroController.getHero(resultSet.getString("name")));
+				heroes.add(heroController.getHeroFromDB(resultSet.getString("name")));
 			}
 		} catch (SQLException e) {
 			System.err.println("Invalid conf.properties.");
@@ -54,7 +54,7 @@ public class Game {
 		heroController.removeModel();
 	}
 
-	public void importHero(String heroName) {
-		heroController.loadModel(heroName);
+	public void importHero(AHero hero) {
+		heroController.loadModel(hero);
 	}
 }

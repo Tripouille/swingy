@@ -20,11 +20,11 @@ public class AHeroController {
 		this.model.updateWeapon(newWeapon);
 	}
 
-	public void loadModel(String heroName) {
-		model = AHero.find(heroName);
+	public void loadModel(AHero hero) {
+		model = hero;
 	}
 
-	public AHero getHero(String heroName) {
+	public AHero getHeroFromDB(String heroName) {
 		return AHero.find(heroName);
 	}
 
