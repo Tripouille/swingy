@@ -21,6 +21,7 @@ public class GameView {
 		System.out.println(i + " - Create new hero");
 		if (i > 0)
 			System.out.println(++i + " - Delete hero");
+		System.out.println(++i + " - Switch Mode");
 		System.out.println(++i + " - Quit");
 		System.out.println("Please enter a number beetween 0 and " + i);
 	}

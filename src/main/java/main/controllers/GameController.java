@@ -46,21 +46,26 @@ public class GameController {
 		ArrayList<AHero> heroes = model.getHeroesFromDB();
 		int createIndex = heroes.size();
 		int deleteIndex = createIndex + 1;
-		int quitIndex = createIndex == 0 ? createIndex + 1 : createIndex + 2;
-		Integer heroIndex = null;
+		int switchIndex = createIndex == 0 ? createIndex + 1 : createIndex + 2;
+		int quitIndex = switchIndex + 1;
+		Integer index = null;
 
 		do {
 			view.renderSelectionConsole(heroes);
-		} while ((heroIndex = getValidIndexFromInput(quitIndex)) == null);
+		} while ((index = getValidIndexFromInput(quitIndex)) == null);
 
-		if (heroIndex == quitIndex)
+		if (index == quitIndex)
 			System.exit(0);
-		else if (heroIndex == createIndex)
+		else if (index == switchIndex) {
+			model.switchMode();
+			selectHeroConsole();
+		}
+		else if (index == createIndex)
 			createHeroConsole(heroes);
-		else if (heroIndex == deleteIndex)
+		else if (index == deleteIndex)
 			deleteHeroConsole(heroes);
 		else
-			loadHero(heroes.get(heroIndex));
+			loadHero(heroes.get(index));
 	}
 	private void selectHeroGui() {
 	}

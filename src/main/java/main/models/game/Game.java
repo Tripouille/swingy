@@ -61,4 +61,9 @@ public class Game {
 	public void showHero() {
 		heroController.render(mode);
 	}
+
+	public void switchMode() {
+		mode = mode.equals("CONSOLE") ? "GUI" : "CONSOLE";
+		System.out.println("NEW MODE -> " + mode);
+	}
 }
