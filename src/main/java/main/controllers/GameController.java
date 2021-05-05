@@ -11,16 +11,19 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import jakarta.validation.constraints.Min;
+import lombok.Getter;
 import main.abstracts.AHero;
 import main.models.game.Game;
 import main.models.hero.AHeroFactory;
 import main.views.GameView;
 
+@Getter
 public class GameController {
 	private Game model;
 	private GameView view = new GameView(this);
 	private Scanner scanner = new Scanner(System.in);
 	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+	ArrayList<AHero> heroes;
 
 	public GameController(Game model) {
 		this.model = model;
@@ -38,13 +41,13 @@ public class GameController {
 	}
 
 	public void selectHero() {
-		ArrayList<AHero> heroes = model.getHeroesFromDB();
+		heroes = model.getHeroesFromDB();
 		if (model.getMode().equals("CONSOLE"))
-			selectHeroConsole(heroes);
+			selectHeroConsole();
 		else
-			selectHeroGui(heroes);
+			selectHeroGui();
 	}
-	private void selectHeroConsole(ArrayList<AHero> heroes) {
+	public void selectHeroConsole() {
 		System.out.println("> Select Hero <");
 		int createIndex = heroes.size();
 		int deleteIndex = createIndex + 1;
@@ -63,17 +66,17 @@ public class GameController {
 			selectHero();
 		}
 		else if (index == createIndex)
-			createHeroConsole(heroes);
+			createHeroConsole();
 		else if (index == deleteIndex)
-			deleteHeroConsole(heroes);
+			deleteHeroConsole();
 		else
-			loadHero(heroes.get(index));
+			loadHero(index);
 	}
-	private void selectHeroGui(ArrayList<AHero> heroes) {
+	public void selectHeroGui() {
 		view.renderSelectionGui(heroes);
 	}
 
-	private void createHeroConsole(ArrayList<AHero> heroesAlreadyInDB) {
+	public void createHeroConsole() {
 		System.out.println("> Create New Hero <");
 		ArrayList<AHero> availableClass = AHeroFactory.getAllAvailableClass();
 		Integer classIndex = askClassIndexConsole(availableClass);
@@ -82,7 +85,7 @@ public class GameController {
 		String heroName = null;
 		AHero newHero = null;
 		ArrayList<String> alreadyUsedName = new ArrayList<String>();
-		for (AHero hero : heroesAlreadyInDB) alreadyUsedName.add(hero.getName());
+		for (AHero hero : heroes) alreadyUsedName.add(hero.getName());
 
 		do {	
 			view.renderCreateHeroNameConsole(heroClass);
@@ -100,14 +103,14 @@ public class GameController {
 		selectHero();
 	}
 
-	private void deleteHeroConsole(ArrayList<AHero> heroesAlreadyInDB) {
+	public void deleteHeroConsole() {
 		System.out.println("> Delete Hero <");
 		Integer heroIndex = null;
 
 		do {
-			view.renderDeleteHeroConsole(heroesAlreadyInDB);
-		} while ((heroIndex = getValidIndexFromInput(heroesAlreadyInDB.size() - 1)) == null);
-		heroesAlreadyInDB.get(heroIndex).remove();
+			view.renderDeleteHeroConsole(heroes);
+		} while ((heroIndex = getValidIndexFromInput(heroes.size() - 1)) == null);
+		heroes.get(heroIndex).remove();
 		selectHero();
 	}
 	
@@ -120,8 +123,8 @@ public class GameController {
 		return (classIndex);
 	}
 
-	private void loadHero(AHero hero) {
-		model.importHero(hero);
+	public void loadHero(int index) {
+		model.importHero(heroes.get(index));
 	}
 
 	public void start() {
