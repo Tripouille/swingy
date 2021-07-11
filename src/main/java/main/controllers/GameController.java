@@ -47,7 +47,7 @@ public class GameController {
 		else
 			selectHeroGui();
 	}
-	public void selectHeroConsole() {
+	private void selectHeroConsole() {
 		System.out.println("> Select Hero <");
 		int createIndex = heroes.size();
 		int deleteIndex = createIndex + 1;
@@ -72,11 +72,18 @@ public class GameController {
 		else
 			loadHero(index);
 	}
-	public void selectHeroGui() {
+	private void selectHeroGui() {
 		view.renderSelectionGui(heroes);
 	}
 
-	public void createHeroConsole() {
+
+	public void createHero() {
+		if (model.getMode().equals("CONSOLE"))
+			createHeroConsole();
+		else
+			createHeroGui();
+	}
+	private void createHeroConsole() {
 		System.out.println("> Create New Hero <");
 		ArrayList<AHero> availableClass = AHeroFactory.getAllAvailableClass();
 		Integer classIndex = askClassIndexConsole(availableClass);
@@ -100,7 +107,9 @@ public class GameController {
 				System.out.println("This name is already use.");
 		} while (alreadyUsedName.contains(heroName) || constraintViolations.size() > 0);
 		newHero.save();
-		selectHero();
+	}
+	private void createHeroGui() {
+		view.renderCreateHeroClassGui(AHeroFactory.getAllAvailableClass());
 	}
 
 	public void deleteHeroConsole() {
